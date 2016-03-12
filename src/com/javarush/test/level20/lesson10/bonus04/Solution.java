@@ -1,5 +1,9 @@
 package com.javarush.test.level20.lesson10.bonus04;
 
+import java.io.Serializable;
+import java.util.AbstractList;
+import java.util.List;
+
 /* Свой список
 Посмотреть, как реализован LinkedList.
 Элементы следуют так: 1->2->3->4  и так 4->3->2->1
@@ -48,8 +52,7 @@ package com.javarush.test.level20.lesson10.bonus04;
 Должно быть наследование AbstractList<String>, List<String>, Cloneable, Serializable
 Метод main в тестировании не участвует
 */
-/*
-public class Solution {
+public class Solution extends AbstractList implements Cloneable, Serializable{
     public static void main(String[] args) {
         List<String> list = new Solution();
         for (int i = 1; i < 16; i++) {
@@ -64,5 +67,20 @@ public class Solution {
         //have to be implemented
         return null;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param index
+     * @throws IndexOutOfBoundsException {@inheritDoc}
+     */
+    @Override
+    public Object get(int index) {
+        return null;
+    }
+
+    @Override
+    public int size() {
+        return 0;
+    }
 }
-*/

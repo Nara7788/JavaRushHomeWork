@@ -32,7 +32,7 @@ public class Solution {
         String[] filepart = {"closed {4}", "open {2} and last {3}"};
 
         ChoiceFormat fileform = new ChoiceFormat(filelimits, filepart);
-        Format[] testFormats = {null, dateFormat, fileform};
+        Format[] testFormats = {null, null, dateFormat, fileform};
         MessageFormat pattform = new MessageFormat("{0}   {1} | {5} {6}");
         pattform.setFormats(testFormats);
 
@@ -50,8 +50,46 @@ public class Solution {
 
     public static void sort(List<Stock> list) {
         Collections.sort(list, new Comparator<Stock>() {
-            public int compare(Stock stock1, Stock stock2) {
-                return 0;
+            @Override
+            public int compare(Stock o1, Stock o2) {
+                int result;
+                result = o1.get("name").toString().compareTo(o2.get("name").toString());
+                if (result == 0) {
+                    Date date1 = (Date) o1.get("date");
+                    Date date2 = (Date) o2.get("date");
+
+                    date1.setHours(0);
+                    date1.setMinutes(0);
+                    date1.setSeconds(0);
+                    date2.setHours(0);
+                    date2.setMinutes(0);
+                    date2.setSeconds(0);
+
+                    result = date2.compareTo(date1);
+
+                    if (result == 0) {
+                        double change1;
+                        double change2;
+                        if ((double)o1.get("open") != 0 || (double)o1.get("last") != 0) {
+                            change1 = (double)o1.get("last") - (double)o1.get("open");
+                        } else {
+                            change1 = (double)o1.get("change");
+                        }
+
+                        if ((double)o2.get("open") != 0 || (double)o2.get("last") != 0) {
+                            change2 = (double)o2.get("last") - (double)o2.get("open");
+                        } else {
+                            change2 = (double)o2.get("change");
+                        }
+                        if (change1 > change2)
+                            result = -1;
+                        else if (change1 < change2)
+                            result = 1;
+                        else
+                            result = 0;
+                    }
+                }
+                return result;
             }
         });
     }
